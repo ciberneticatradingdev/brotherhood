@@ -6,4 +6,4 @@ One-page site for **BrotherHood** on Robinhood Chain. Static, no build.
 node serve.js   # http://localhost:8974
 ```
 
-Pending: contract address (`#ca-value`), Buy link (`#buy`), X link (`#x`).
+CA: `0x6ee1915a26999f29bc7822419748442379883ea4` · X: https://x.com/Brother_Hood_RH · Buy: https://ponsfamily.com/launchpad/0x6ee1915a26999f29bc7822419748442379883ea4
