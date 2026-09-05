@@ -17,45 +17,70 @@
   :root{
     --lime:#c8fa0b;
     --ink:#0b1200;
+    --vh:100vh;
   }
+  @supports (height:100dvh){ :root{--vh:100dvh} }
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{min-height:100%}
+  html,body{height:100%;overflow:hidden}
   body{
     background:var(--lime);
     color:var(--ink);
     font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:32px 24px;
   }
 
+  /* ---------- splash ---------- */
+  .splash{
+    position:fixed;inset:0;z-index:10;
+    background:var(--lime);
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .9s cubic-bezier(.77,0,.18,1);
+  }
+  .splash img{
+    width:min(40vh,320px,70vw);
+    aspect-ratio:1/1;object-fit:contain;display:block;
+    animation:breathe 1.6s ease-in-out infinite;
+  }
+  @keyframes breathe{
+    0%,100%{transform:scale(1);opacity:.85}
+    50%{transform:scale(1.08);opacity:1}
+  }
+  body.ready .splash{transform:translateY(-100%)}
+
+  /* ---------- hero (fits viewport exactly) ---------- */
   main{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-    gap:0;
+    height:var(--vh);
     width:100%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
+    padding:clamp(16px,3vh,40px) 24px;
+    transform:translateY(100%);
+    transition:transform .9s cubic-bezier(.77,0,.18,1);
   }
+  body.ready main{transform:translateY(0)}
 
+  .logo-wrap{
+    flex:1 1 auto;
+    min-height:0;
+    width:100%;
+    display:flex;align-items:center;justify-content:center;
+  }
   .logo{
-    width:min(62vh,680px,90vw);
+    height:100%;
+    max-width:min(90vw,760px);
+    max-height:760px;
     aspect-ratio:1/1;
-    display:block;
-    object-fit:contain;
+    object-fit:contain;display:block;
     animation:float 6s ease-in-out infinite;
   }
   @keyframes float{
     0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-10px)}
+    50%{transform:translateY(-8px)}
   }
 
+  .text{flex:0 0 auto;display:flex;flex-direction:column;align-items:center}
   h1{
-    margin-top:8px;
-    font-size:min(9vw,120px);
+    font-size:min(9vw,11vh,120px);
     font-weight:900;
     letter-spacing:-.05em;
     line-height:1;
@@ -63,7 +88,7 @@
     white-space:nowrap;
   }
   .sub{
-    margin-top:12px;
+    margin-top:clamp(6px,1.2vh,12px);
     font-weight:700;
     font-size:min(2.2vw,16px);
     letter-spacing:.3em;
@@ -71,11 +96,11 @@
     opacity:.7;
   }
 
-  .links{display:flex;justify-content:center;gap:14px;margin-top:30px}
+  .links{display:flex;justify-content:center;gap:14px;margin-top:clamp(14px,3vh,30px)}
   .links a{
     text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
     min-width:150px;
-    padding:16px 36px;border-radius:999px;
+    padding:clamp(11px,1.8vh,16px) 36px;border-radius:999px;
     background:var(--ink);color:var(--lime);
     font-weight:900;font-size:16px;letter-spacing:.12em;text-transform:uppercase;
     transition:transform .12s ease;
@@ -84,11 +109,11 @@
   .links a.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 3px var(--ink)}
 
   .ca{
-    margin-top:18px;
+    margin-top:clamp(10px,2vh,18px);
     display:inline-flex;align-items:center;gap:14px;
     background:rgba(11,18,0,.08);
     border:2px solid rgba(11,18,0,.3);
-    border-radius:999px;padding:12px 22px;
+    border-radius:999px;padding:11px 22px;
     cursor:pointer;max-width:92vw;
     transition:background .15s ease,border-color .15s ease;
   }
@@ -102,36 +127,60 @@
   .ca .copy-state{font-weight:900;font-size:11px;letter-spacing:.14em}
 
   @media(max-width:640px){
-    body{padding:24px 18px}
-    .logo{width:min(50vh,86vw)}
+    main{padding:16px 18px}
     h1{font-size:min(13vw,64px)}
     .sub{font-size:11px;letter-spacing:.22em}
-    .links{gap:10px;margin-top:22px}
-    .links a{min-width:120px;padding:14px 26px;font-size:14px}
+    .links{gap:10px}
+    .links a{min-width:120px;padding:13px 26px;font-size:14px}
     .ca{padding:10px 16px;gap:10px}
     .ca .value{font-size:11px}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .splash img,.logo{animation:none}
+    .splash,main{transition:none}
   }
 </style>
 </head>
 <body>
+  <div class="splash" id="splash" aria-hidden="true">
+    <img src="assets/brotherhood.jpg" alt="" />
+  </div>
+
   <main>
-    <img class="logo" src="assets/brotherhood.jpg" alt="BrotherHood" />
-    <h1>BrotherHood</h1>
-    <div class="sub">On Robinhood Chain</div>
-
-    <nav class="links">
-      <a href="#" id="buy" target="_blank" rel="noopener">Buy</a>
-      <a class="ghost" href="#" id="x" target="_blank" rel="noopener">X</a>
-    </nav>
-
-    <div class="ca" id="ca" title="Click to copy">
-      <span class="label">CA</span>
-      <span class="value" id="ca-value">TBA</span>
-      <span class="copy-state" id="ca-state"></span>
+    <div class="logo-wrap">
+      <img class="logo" src="assets/brotherhood.jpg" alt="BrotherHood" />
+    </div>
+    <div class="text">
+      <h1>BrotherHood</h1>
+      <div class="sub">On Robinhood Chain</div>
+      <nav class="links">
+        <a href="#" id="buy" target="_blank" rel="noopener">Buy</a>
+        <a class="ghost" href="#" id="x" target="_blank" rel="noopener">X</a>
+      </nav>
+      <div class="ca" id="ca" title="Click to copy">
+        <span class="label">CA</span>
+        <span class="value" id="ca-value">TBA</span>
+        <span class="copy-state" id="ca-state"></span>
+      </div>
     </div>
   </main>
 
 <script>
+  // Splash: breathe for at least 2.2s and until the logo is loaded, then slide the hero in.
+  (function(){
+    var MIN = 2200, start = Date.now();
+    var img = document.querySelector('.logo');
+    function go(){
+      var wait = Math.max(0, MIN - (Date.now() - start));
+      setTimeout(function(){
+        document.body.classList.add('ready');
+        setTimeout(function(){ var s = document.getElementById('splash'); if (s) s.remove(); }, 1000);
+      }, wait);
+    }
+    if (img.complete) go(); else { img.addEventListener('load', go); img.addEventListener('error', go); }
+  })();
+
   var ca = document.getElementById('ca');
   var val = document.getElementById('ca-value');
   var state = document.getElementById('ca-state');
