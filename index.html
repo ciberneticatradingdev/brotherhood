@@ -22,7 +22,9 @@
   }
   @supports (height:100dvh){ :root{--vh:100dvh} }
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%;overflow:hidden}
+  html,body{min-height:100%}
+  body:not(.ready){overflow:hidden;height:100%}
+  html{scroll-behavior:smooth}
   body{
     background:var(--lime);
     color:var(--ink);
@@ -127,8 +129,43 @@
   }
   .ca .copy-state{font-weight:900;font-size:11px;letter-spacing:.14em}
 
+  /* ---------- gallery ---------- */
+  .gallery{
+    width:100%;max-width:1200px;margin:0 auto;
+    padding:clamp(40px,8vh,96px) 24px clamp(48px,8vh,96px);
+    text-align:center;
+  }
+  .gallery h2{
+    font-size:min(7vw,56px);font-weight:900;letter-spacing:-.04em;line-height:1;text-transform:uppercase;
+  }
+  .gallery .kicker{
+    margin-top:10px;font-weight:700;font-size:min(2.2vw,14px);letter-spacing:.3em;text-transform:uppercase;opacity:.7;
+  }
+  .grid{
+    margin-top:clamp(24px,4vh,44px);
+    columns:3;column-gap:18px;
+  }
+  .grid figure{
+    break-inside:avoid;margin:0 0 18px;
+    border-radius:20px;overflow:hidden;
+    border:3px solid var(--ink);
+    box-shadow:0 18px 40px -22px rgba(11,18,0,.6);
+    transition:transform .25s ease;
+  }
+  .grid figure:hover{transform:translateY(-4px)}
+  .grid img{width:100%;height:auto;display:block}
+
+  footer{
+    text-align:center;padding:0 24px 32px;
+    font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;opacity:.55;
+  }
+
+  @media(max-width:960px){ .grid{columns:2} }
+
   @media(max-width:640px){
     main{padding:16px 18px}
+    .grid{columns:1;column-gap:0}
+    .grid figure{border-radius:16px;margin-bottom:14px}
     h1{font-size:min(13vw,64px)}
     .sub{font-size:11px;letter-spacing:.22em}
     .links{gap:10px}
@@ -167,6 +204,21 @@
       </div>
     </div>
   </main>
+
+  <section class="gallery" id="gallery">
+    <h2>Brothers in action</h2>
+    <div class="kicker">Nobody gets left behind</div>
+    <div class="grid">
+      <figure><img src="assets/gallery/sunset.jpg" alt="Two brothers watching the sunset over the ocean" loading="lazy" /></figure>
+      <figure><img src="assets/gallery/gym.jpg" alt="One brother spotting the other on the bench press" loading="lazy" /></figure>
+      <figure><img src="assets/gallery/fishing.jpg" alt="Two brothers fishing on a lake at sunset" loading="lazy" /></figure>
+      <figure><img src="assets/gallery/rocket.jpg" alt="Two brothers watching a rocket launch" loading="lazy" /></figure>
+      <figure><img src="assets/gallery/bull.jpg" alt="Two brothers walking with the Wall Street bull" loading="lazy" /></figure>
+      <figure><img src="assets/gallery/desk.jpg" alt="Two brothers trading at their desks with a green chart" loading="lazy" /></figure>
+    </div>
+  </section>
+
+  <footer>BrotherHood · Robinhood Chain</footer>
 
 <script>
   // Splash: breathe for at least 2.2s and until the logo is loaded, then slide the hero in.
