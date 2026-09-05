@@ -12,87 +12,88 @@
 <meta name="twitter:card" content="summary" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;900&display=swap" rel="stylesheet" />
 <style>
   :root{
     --lime:#c8fa0b;
     --ink:#0b1200;
-    --nav:60px;
-    --ticker:52px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
+  html,body{min-height:100%}
   body{
     background:var(--lime);
     color:var(--ink);
     font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
-    display:grid;
-    grid-template-rows:var(--nav) 1fr var(--ticker);
     min-height:100vh;
-    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px 24px;
   }
 
-  /* ---------- top nav ---------- */
-  nav{
-    height:var(--nav);
-    background:var(--ink);
-    color:var(--lime);
-    display:flex;align-items:center;justify-content:space-between;
-    padding:0 28px;
-  }
-  .wordmark{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.02em}
-  .wordmark svg{width:18px;height:26px;fill:var(--lime)}
-  .navlinks{display:flex;gap:8px}
-  .navlinks a{
-    text-decoration:none;color:var(--ink);background:var(--lime);
-    font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;
-    padding:9px 18px;border-radius:999px;
-    transition:transform .12s ease;
-  }
-  .navlinks a:hover{transform:translateY(-1px)}
-  .navlinks a.ghost{background:transparent;color:var(--lime);box-shadow:inset 0 0 0 2px var(--lime)}
-
-  /* ---------- stage ---------- */
-  .stage{
-    position:relative;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
+  main{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
     gap:0;
-    padding:16px 24px;
-    overflow:hidden;
+    width:100%;
   }
+
   .logo{
-    width:min(52vh,520px,86vw);
+    width:min(62vh,680px,90vw);
     aspect-ratio:1/1;
     display:block;
     object-fit:contain;
     animation:float 6s ease-in-out infinite;
-    margin-bottom:-4vh;
   }
   @keyframes float{
     0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-12px)}
+    50%{transform:translateY(-10px)}
   }
+
   h1{
-    font-size:min(11vw,150px);
+    margin-top:8px;
+    font-size:min(9vw,120px);
     font-weight:900;
-    letter-spacing:-.06em;
-    line-height:.9;
+    letter-spacing:-.05em;
+    line-height:1;
     text-transform:uppercase;
     white-space:nowrap;
   }
   .sub{
-    margin-top:10px;
-    font-weight:700;font-size:min(2.2vw,15px);letter-spacing:.28em;text-transform:uppercase;opacity:.7;
+    margin-top:12px;
+    font-weight:700;
+    font-size:min(2.2vw,16px);
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    opacity:.7;
   }
-  .ca{
-    margin-top:22px;
-    display:inline-flex;align-items:center;gap:14px;
+
+  .links{display:flex;justify-content:center;gap:14px;margin-top:30px}
+  .links a{
+    text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
+    min-width:150px;
+    padding:16px 36px;border-radius:999px;
     background:var(--ink);color:var(--lime);
+    font-weight:900;font-size:16px;letter-spacing:.12em;text-transform:uppercase;
+    transition:transform .12s ease;
+  }
+  .links a:hover{transform:translateY(-2px)}
+  .links a.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 3px var(--ink)}
+
+  .ca{
+    margin-top:18px;
+    display:inline-flex;align-items:center;gap:14px;
+    background:rgba(11,18,0,.08);
+    border:2px solid rgba(11,18,0,.3);
     border-radius:999px;padding:12px 22px;
     cursor:pointer;max-width:92vw;
+    transition:background .15s ease,border-color .15s ease;
   }
-  .ca .label{font-weight:900;font-size:11px;letter-spacing:.2em;opacity:.7}
+  .ca:hover{background:rgba(11,18,0,.14);border-color:rgba(11,18,0,.5)}
+  .ca .label{font-weight:900;font-size:11px;letter-spacing:.2em;opacity:.65}
   .ca .value{
     font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
     font-size:13px;font-weight:600;
@@ -100,61 +101,35 @@
   }
   .ca .copy-state{font-weight:900;font-size:11px;letter-spacing:.14em}
 
-  /* ---------- bottom ticker ---------- */
-  .ticker{
-    height:var(--ticker);
-    background:var(--ink);color:var(--lime);
-    display:flex;align-items:center;overflow:hidden;
-    font-weight:900;font-size:15px;letter-spacing:.22em;text-transform:uppercase;
-  }
-  .ticker .track{display:flex;white-space:nowrap;animation:scroll 28s linear infinite}
-  .ticker span{padding:0 28px}
-  .ticker span::after{content:"✦";margin-left:56px;opacity:.6}
-  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
   @media(max-width:640px){
-    :root{--nav:56px;--ticker:46px}
-    nav{padding:0 18px}
-    .wordmark{font-size:16px}
-    .navlinks a{padding:8px 14px;font-size:12px}
-    .logo{width:min(46vh,86vw);margin-bottom:-2vh}
-    h1{font-size:min(13vw,72px)}
+    body{padding:24px 18px}
+    .logo{width:min(50vh,86vw)}
+    h1{font-size:min(13vw,64px)}
     .sub{font-size:11px;letter-spacing:.22em}
+    .links{gap:10px;margin-top:22px}
+    .links a{min-width:120px;padding:14px 26px;font-size:14px}
     .ca{padding:10px 16px;gap:10px}
     .ca .value{font-size:11px}
-    .ticker{font-size:12px}
   }
 </style>
 </head>
 <body>
-  <nav>
-    <div class="wordmark">
-      <svg viewBox="0 0 64 96" aria-hidden="true"><path d="M58 2c-10 8-26 12-36 26C13 40 9 56 9 70c0 4 .5 8 1 11-3 4-6 8-8 13l6 2c2-4 4-8 7-11 14 3 27-3 34-16 5-9 6-20 6-30 0-11 1-24 3-37z"/></svg>
-      BrotherHood
-    </div>
-    <div class="navlinks">
-      <a href="#" id="buy" target="_blank" rel="noopener">Buy</a>
-      <a class="ghost" href="#" id="x" target="_blank" rel="noopener">X</a>
-    </div>
-  </nav>
-
-  <main class="stage">
+  <main>
     <img class="logo" src="assets/brotherhood.jpg" alt="BrotherHood" />
     <h1>BrotherHood</h1>
     <div class="sub">On Robinhood Chain</div>
+
+    <nav class="links">
+      <a href="#" id="buy" target="_blank" rel="noopener">Buy</a>
+      <a class="ghost" href="#" id="x" target="_blank" rel="noopener">X</a>
+    </nav>
+
     <div class="ca" id="ca" title="Click to copy">
       <span class="label">CA</span>
       <span class="value" id="ca-value">TBA</span>
       <span class="copy-state" id="ca-state"></span>
     </div>
   </main>
-
-  <div class="ticker" aria-hidden="true">
-    <div class="track">
-      <span>BrotherHood</span><span>Robinhood Chain</span><span>Nobody gets left behind</span><span>BrotherHood</span><span>Robinhood Chain</span><span>Nobody gets left behind</span>
-      <span>BrotherHood</span><span>Robinhood Chain</span><span>Nobody gets left behind</span><span>BrotherHood</span><span>Robinhood Chain</span><span>Nobody gets left behind</span>
-    </div>
-  </div>
 
 <script>
   var ca = document.getElementById('ca');
